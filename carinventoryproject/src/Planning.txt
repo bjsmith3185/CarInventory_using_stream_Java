@@ -1,0 +1,63 @@
+
+
+CarInventory class
+
+methods
+
+    start
+        calls readFromFile()
+        calls mainMenu()
+
+
+    mainMenu ( put while loop here? )
+        accepts user input
+        calls the specific method()
+
+    addCar
+        accepts user input
+        calls writeToFile()
+        calls mainMenu()
+
+    deleteCar
+        calls viewInventory()
+        accepts user input
+        calls writeTofile()
+        calls mainMenu()
+
+    searchForCar
+        displays search options (in whlle loop)
+        accepts user input
+        calls specific search method()
+
+     searchByMake()
+        accepts user input
+        searches state
+        creates a filteredList
+        calls displaySearchResults()
+
+     searchByModel()
+
+     searchByColor()
+
+     searchByYear()
+
+     searchByMiles()
+
+
+    viewInventory
+        outputs the current state.
+        calls mainMenu()  remove this and let the calling method call mainmenu()
+
+    displaySearchResults
+        outputs the search state
+        calls mainMenu()
+
+
+    writeToFile
+        writes the current state to the file, overwrites each time
+        calls readFromFile() to set state
+
+
+    readFromfile
+        reads the file
+        sets the current state
