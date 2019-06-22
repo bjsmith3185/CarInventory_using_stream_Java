@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class CarInventory {
 
@@ -168,24 +169,18 @@ public class CarInventory {
     public void searchByMake() {
         System.out.println("Please enter in what make of car you would like to search: ");
         String searchMake = sc.nextLine();
-        int count = 0;
 
-        for (int i = 0; i < carsList.size(); i++) {
-            if (carsList.get(i).getMake().equals(searchMake)) {
-                filteredList.add(carsList.get(i));
-                count++;
-            }
-        }
+        filteredList = carsList.stream().filter(c -> searchMake.equals(c.getMake())).collect(Collectors.toList());
+//        filteredList = carsList.stream().filter(c -> c.getMake().equals(searchMake)).collect(Collectors.toList());
 
-        if ( count > 0 ) {
-            // display results
-            displaySearchResults();
-        } else {
+        if (filteredList.size() == 0) {
             // no results fount
             System.out.println("No vehicles were found.");
+            mainMenu();
+        } else {
+            // display results
+            displaySearchResults();
         }
-
-        mainMenu();
 
     }
 
@@ -193,94 +188,74 @@ public class CarInventory {
     public void searchByModel() {
         System.out.println("Please enter in what model of car you would like to search: ");
         String searchModel = sc.nextLine();
-        int count = 0;
+        filteredList.clear();
+        filteredList = carsList.stream().filter(c -> c.getModel().equals(searchModel)).collect(Collectors.toList());
 
-        for (int i = 0; i < carsList.size(); i++) {
-            if (carsList.get(i).getMake().equals(searchModel)) {
-                filteredList.add(carsList.get(i));
-                count++;
-            }
-        }
-        if ( count > 0 ) {
-            // display results
-            displaySearchResults();
-        } else {
+        if (filteredList.size() == 0) {
             // no results fount
             System.out.println("No vehicles were found.");
+            mainMenu();
+        } else {
+            // display results
+            displaySearchResults();
         }
 
-        mainMenu();
     }
 
     // searchByColor()
     public void searchByColor() {
         System.out.println("Enter in what color of car you would like to search for: ");
         String searchColor = sc.nextLine();
-        int count = 0;
+        filteredList.clear();
+        filteredList = carsList.stream().filter(c -> c.getColor().equals(searchColor)).collect(Collectors.toList());
 
-        for (int i = 0; i < carsList.size(); i++) {
-            if (carsList.get(i).getMake().equals(searchColor)) {
-                filteredList.add(carsList.get(i));
-                count++;
-            }
-        }
-        if ( count > 0 ) {
-            // display results
-            displaySearchResults();
-        } else {
+        if (filteredList.size() == 0) {
             // no results fount
             System.out.println("No vehicles were found.");
+            mainMenu();
+        } else {
+            // display results
+            displaySearchResults();
         }
 
-        mainMenu();
     }
 
     // searchByYear()
     public void searchByYear() {
         System.out.println("Enter in what year of car you would like to search for: ");
         String searchYearStr = sc.nextLine();
-        int count = 0;
-
         int searchYear = Integer.parseInt(searchYearStr);
-        for (int i = 0; i < carsList.size(); i++) {
-            if (carsList.get(i).getYear() == searchYear) {
-                filteredList.add(carsList.get(i));
-                count++;
-            }
-        }
-        if ( count > 0 ) {
-            // display results
-            displaySearchResults();
-        } else {
+        filteredList.clear();
+        filteredList = carsList.stream().filter(c -> c.getYear() == searchYear).collect(Collectors.toList());
+
+        if (filteredList.size() == 0) {
             // no results fount
             System.out.println("No vehicles were found.");
+            mainMenu();
+        } else {
+            // display results
+            displaySearchResults();
         }
 
-        mainMenu();
     }
 
     // searchByMiles()
     public void searchByMiles() {
         System.out.println("Enter in the maximum amount of miles you would like the car to have: ");
-        String searchYearStr = sc.nextLine();
-        int count = 0;
+        String searchMilesStr = sc.nextLine();
+        int searchMiles = Integer.parseInt(searchMilesStr);
+        filteredList.clear();
+        filteredList = carsList.stream().filter(c -> c.getYear() < searchMiles).collect(Collectors.toList());
 
-        int searchYear = Integer.parseInt(searchYearStr);
-        for (int i = 0; i < carsList.size(); i++) {
-            if (carsList.get(i).getMiles() < searchYear) {
-                filteredList.add(carsList.get(i));
-                count++;
-            }
-        }
-        if ( count > 0 ) {
-            // display results
-            displaySearchResults();
-        } else {
+        if (filteredList.size() == 0) {
             // no results fount
             System.out.println("No vehicles were found.");
+            mainMenu();
+        } else {
+            // display results
+            displaySearchResults();
         }
 
-        mainMenu();
     }
 
 
@@ -290,12 +265,10 @@ public class CarInventory {
 
         for (int i = 0; i < carsList.size(); i++) {
             System.out.println("Vehicle # " + i);
-            System.out.println( carsList.get(i).getColor() + " " + carsList.get(i).getYear() + " " + carsList.get(i).getMake() + " " +
-                    carsList.get(i).getModel() + " with " + carsList.get(i).getMiles() + " miles" );
+            System.out.println(carsList.get(i).getColor() + " " + carsList.get(i).getYear() + " " + carsList.get(i).getMake() + " " +
+                    carsList.get(i).getModel() + " with " + carsList.get(i).getMiles() + " miles");
             System.out.println("________________");
         }
-
-//        mainMenu();
 
     }
 
@@ -306,8 +279,8 @@ public class CarInventory {
 
         for (int i = 0; i < filteredList.size(); i++) {
             System.out.println("Vehicle # " + i);
-            System.out.println( carsList.get(i).getColor() + " " + carsList.get(i).getYear() + " " + carsList.get(i).getMake() + " " +
-                    carsList.get(i).getModel() + " with " + carsList.get(i).getMiles() + " miles" );
+            System.out.println(filteredList.get(i).getColor() + " " + filteredList.get(i).getYear() + " " + filteredList.get(i).getMake() + " " +
+                    filteredList.get(i).getModel() + " with " + filteredList.get(i).getMiles() + " miles");
             System.out.println("________________");
         }
 
